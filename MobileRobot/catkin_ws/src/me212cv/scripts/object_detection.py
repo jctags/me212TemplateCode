@@ -117,6 +117,8 @@ def HSVObjectDetection(cv_image, toPrint = True):
     # define range of red color in HSV
     lower_red = np.array([170,50,50])
     upper_red = np.array([180,255,255])
+    
+    #add colors here
 
     # Threshold the HSV image to get only red colors
     mask = cv2.inRange(hsv_image, lower_red, upper_red)   ##
