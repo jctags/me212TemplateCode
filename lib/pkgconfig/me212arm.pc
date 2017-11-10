@@ -1,8 +1,0 @@
-prefix=/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel
-
-Name: me212arm
-Description: Description of me212arm
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel/lib 
-Requires: 
