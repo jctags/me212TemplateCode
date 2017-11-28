@@ -7,7 +7,5 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel/lib:/opt/ros/kinetic/lib:/opt/ros/kinetic/lib/x86_64-linux-gnu:/usr/local/lib:/usr/local/lib:/usr/local/cuda/lib64:/usr/local/cuda/lib64"
 export PWD="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/build"
-export ROSLISP_PACKAGE_DIRECTORIES="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/src:$ROS_PACKAGE_PATH"

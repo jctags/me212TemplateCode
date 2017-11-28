@@ -46,7 +46,7 @@ CMAKE_COLOR_MAKEFILE:BOOL=ON
 CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
 
 //Flags used by the compiler during all build types.
-CMAKE_CXX_FLAGS:STRING=' -Wreturn-type -Wuninitialized '
+CMAKE_CXX_FLAGS:STRING=' -Wreturn-type -Wuninitialized -Wreturn-type -Wuninitialized '
 
 //Flags used by the compiler during debug builds.
 CMAKE_CXX_FLAGS_DEBUG:STRING=-g
@@ -65,7 +65,7 @@ CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
 
 //Flags used by the compiler during all build types.
-CMAKE_C_FLAGS:STRING=' -Wreturn-type -Wuninitialized '
+CMAKE_C_FLAGS:STRING=' -Wreturn-type -Wuninitialized -Wreturn-type -Wuninitialized '
 
 //Flags used by the compiler during debug builds.
 CMAKE_C_FLAGS_DEBUG:STRING=-g
@@ -361,6 +361,12 @@ me212cv_BINARY_DIR:STATIC=/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/buil
 //Value Computed by CMake
 me212cv_SOURCE_DIR:STATIC=/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/src/me212cv
 
+//Value Computed by CMake
+me212pillbed_BINARY_DIR:STATIC=/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/build/me212pillbed
+
+//Value Computed by CMake
+me212pillbed_SOURCE_DIR:STATIC=/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/src/me212pillbed
+
 //The directory containing a CMake configuration file for message_generation.
 message_generation_DIR:PATH=/opt/ros/kinetic/share/message_generation/cmake
 
@@ -484,7 +490,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=12
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=13
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
