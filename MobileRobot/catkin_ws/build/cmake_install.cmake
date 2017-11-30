@@ -127,6 +127,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/build/me212base/cmake_install.cmake")
   include("/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/build/me212bot/cmake_install.cmake")
   include("/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/build/me212cv/cmake_install.cmake")
+  include("/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/build/me212pillbed/cmake_install.cmake")
 
 endif()
 

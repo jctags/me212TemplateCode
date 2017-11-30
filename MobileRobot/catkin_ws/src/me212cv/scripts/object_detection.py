@@ -35,9 +35,15 @@ fy = msg.P[5]
 cx = msg.P[2]
 cy = msg.P[6]
 
+#import robosr
+#mystring = robosr.listen(['red','blue','green'])
+mystring = 'red'
+
+
+
 def main():
     useHSV   = True
-    useDepth = True
+    useDepth = False
     if not useHSV:
         # Task 1
         
@@ -98,7 +104,9 @@ def rosHSVProcessCallBack(msg):
         # Find a bounding box of detected region
         #  xp, yp are the coordinate of the top left corner of the bounding rectangle
         #  w, h are the width and height of the bounding rectangle
-        xp,yp,w,h = cv2.boundingRect(cnt)  
+        xp,yp,w,h = cv2.boundingRect(cnt)
+        
+        
         
         # Set the object to 2 meters away from camera
         zc = 2    
@@ -107,6 +115,10 @@ def rosHSVProcessCallBack(msg):
         cv2.rectangle(cv_image,(xp,yp),(xp+w,yp+h),[0,255,255], 2)
         
         centerx, centery = xp+w/2, yp+h/2
+        area = h*w
+        if (area > 6000):
+            print "I see the pill bottle!"
+            print [centerx, centery]
         showPyramid(centerx, centery, zc, w, h)
     
 
@@ -117,14 +129,32 @@ def HSVObjectDetection(cv_image, toPrint = True):
     # define range of red color in HSV
     lower_red = np.array([170,50,50])
     upper_red = np.array([180,255,255])
+    lower_blue = np.array([110,50,50])
+    upper_blue = np.array([130,255,255])
+    lower_green = np.array([30, 50, 50])
+    upper_green = np.array([90, 255, 255])
+    lower_purple = np.array([130, 50, 50])
+    upper_purple = np.array([160, 255, 255])
+
 
     # Threshold the HSV image to get only red colors
-    mask = cv2.inRange(hsv_image, lower_red, upper_red)   ##
+    red_mask = cv2.inRange(hsv_image, lower_red, upper_red)   ##
+    blue_mask = cv2.inRange(hsv_image, lower_blue, upper_blue)   ##
+    green_mask = cv2.inRange(hsv_image, lower_green, upper_green)   ##
+    purple_mask = cv2.inRange(hsv_image, lower_purple, upper_purple) 
+    if (mystring == "red"):
+        mask = red_mask 
+    if (mystring == "green"):
+        mask = green_mask
+    if (mystring == "blue"):
+        mask = blue_mask
+    # else:
+    #mask = purple_mask
     mask_eroded         = cv2.erode(mask, None, iterations = 3)  ##
     mask_eroded_dilated = cv2.dilate(mask_eroded, None, iterations = 10)  ##
     
-    if toPrint:
-        print 'hsv', hsv_image[240][320] # the center point hsv
+    #if toPrint:
+        #print 'hsv', hsv_image[240][320] # the center point hsv
         
     showImageInCVWindow(cv_image, mask_eroded, mask_eroded_dilated)
     image,contours,hierarchy = cv2.findContours(mask_eroded_dilated,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)

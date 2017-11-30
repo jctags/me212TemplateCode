@@ -2037,6 +2037,24 @@ me212cv/preinstall:
 .PHONY : me212cv/preinstall
 
 #=============================================================================
+# Directory level rules for directory me212pillbed
+
+# Convenience name for "all" pass in the directory.
+me212pillbed/all:
+
+.PHONY : me212pillbed/all
+
+# Convenience name for "clean" pass in the directory.
+me212pillbed/clean:
+
+.PHONY : me212pillbed/clean
+
+# Convenience name for "preinstall" pass in the directory.
+me212pillbed/preinstall:
+
+.PHONY : me212pillbed/preinstall
+
+#=============================================================================
 # Special targets to cleanup operation of make.
 
 # Special rule to run CMake to check the build system integrity.
