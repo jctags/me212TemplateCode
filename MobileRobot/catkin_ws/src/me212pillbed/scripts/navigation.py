@@ -5,6 +5,7 @@ import talking
 import os
 import time
 import sys
+import apriltag_navi
 sys.path.insert(0, '/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/src/me212arm/scripts')
 import run_planning
 sys.path.insert(0, '/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/src/me212cv/scripts')
