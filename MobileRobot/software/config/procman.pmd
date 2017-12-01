@@ -3,8 +3,8 @@ cmd "0-roscore" {
     host = "localhost";
 }
 
-cmd "0.1-cameratf" {
-    exec = "roslaunch me212base frames.launch";
+cmd "apriltag-frames" {
+    exec = "roslaunch me212pillbed frames.launch";
     host = "localhost";
 }
 
@@ -40,11 +40,6 @@ cmd "3-tf" {
     host = "localhost";
 }
 
-cmd "3.1-apriltag" {
-    exec = "roslaunch apriltags tag_tf.launch";
-    host = "localhost";
-}
-
 cmd "3.2-apriltags" {
     exec = "roslaunch apriltags apriltags.launch";
     host = "localhost";
@@ -69,14 +64,12 @@ cmd "4.2-planning-scripted" {
     exec = "rosrun me212arm run_planning.py";
     host = "localhost";
 }
-
-cmd "4.3-planning-collision-test" {
-    exec = "rosrun me212arm collision.py";
+cmd "gripper_open_script" {
+    exec = "rosrun me212arm open_gripper.py";
     host = "localhost";
 }
-
-cmd "4.4-planning-rrt" {
-    exec = "rosrun me212arm rrt.py";
+cmd "4.3-planning-collision-test" {
+    exec = "rosrun me212arm collision.py";
     host = "localhost";
 }
 
@@ -85,8 +78,8 @@ cmd "5-robot" {
     host = "localhost";
 }
 
-cmd "6-navigating" {
-    exec = "rosrun me212bot apriltag_navi.py";
+cmd "apriltag-test" {
+    exec = "rosrun me212pillbed apriltag_navi.py";
     host = "localhost";
 }
 
@@ -117,7 +110,18 @@ script "Pill_Task" {
     start cmd "7.2-obstacle-detection";
     wait ms 10000;
 
+}
 
+script "Grip_Test"{
+    start cmd "0-roscore";
+    wait ms 1000;
+    start cmd "1-robot";
+    start cmd "1-robot-arm-real";
+    wait ms 5000;
+    start cmd "1-robot-arm-real-controller";
+    start cmd "1-robot-arm-real-joint-state-publisher";
+    start cmd "3-tf";
+    start cmd "gripper_open_script";
 }
 
 
@@ -138,6 +142,7 @@ script "run-real" {
     wait ms 5000;
     start cmd "1-robot-arm-real-controller";
     start cmd "1-robot-arm-real-joint-state-publisher";
-    start cmd "2-rviz";
+    #start cmd "2-rviz";
     start cmd "3-tf";
+    start cmd "joe-navigation";
 }

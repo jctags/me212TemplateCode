@@ -16,7 +16,8 @@ from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 import math
 
-rospy.init_node('object_detection', anonymous=True)
+rospy.init_node('object_detection', anonymous=True) ##### ERROR HERE
+print("making node")
 
 # Publisher for publishing pyramid marker in rviz
 vis_pub = rospy.Publisher('visualization_marker', Marker, queue_size=10) 
@@ -34,8 +35,9 @@ fx = msg.P[0]
 fy = msg.P[5]
 cx = msg.P[2]
 cy = msg.P[6]
-AvoidPurple = False
-
+IsPurple = "empty"
+numPurple = 0
+numGreen = 0
 
 def main():
     useHSV   = True
@@ -87,6 +89,19 @@ def cvWindowMouseCallBackFunc(event, xp, yp, flags, param):
     # 2. Visualize the pyramid
     showPyramid(xp, yp, zc, 10, 10)
 
+def isPurpleReady():
+    if numPurple>10:
+        #TODO; end it
+        return True
+    else:
+        return False
+def isGreenReady():
+    if numGreen>10:
+        #TODO; end it
+        return True
+    else:
+        return False
+
 # Task 2 callback
 def rosHSVProcessCallBack(msg):
     try:
@@ -103,7 +118,6 @@ def rosHSVProcessCallBack(msg):
         xp,yp,w,h = cv2.boundingRect(cnt)
         
         
-        
         # Set the object to 2 meters away from camera
         zc = 2    
         
@@ -114,7 +128,13 @@ def rosHSVProcessCallBack(msg):
         area = h*w
         if (area > 10000):
             print "I see purple"
+            IsPurple = "purple"
+            numPurple+=1
+            numGreen = 0
             #print [centerx, centery]
+        else:
+            numPurple = 0
+            numGreen+=1
         showPyramid(centerx, centery, zc, w, h)
     
 

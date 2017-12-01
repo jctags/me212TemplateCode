@@ -13,8 +13,8 @@ import traceback
 import sys
 import tf.transformations as tfm
 
-from me212bot.msg import WheelVelCmd
-from pr_apriltags.msg import AprilTagDetections
+from apriltags.msg import AprilTagDetections
+from me212pillbed.msg import WheelVelCmd
 import helper
 
 class ApriltagNavigator():
@@ -38,10 +38,11 @@ class ApriltagNavigator():
         # use apriltag pose detection to find where is the robot
         ##
         for detection in data.detections:
-            if detection.id == 0: 
-                pose_tag_base = helper.poseTransform(helper.pose2list(detection.pose),  homeFrame = '/camera', targetFrame = '/base_link', listener = self.listener)
-                pose_base_map = helper.poseTransform(helper.invPoseList(pose_tag_base), homeFrame = '/apriltag', targetFrame = '/map', listener = self.listener)
-                pubFrame(self.br, pose = pose_base_map, frame_id = '/base_link', parent_frame_id = '/map', npub = 1)
+            tagframename = '/apriltag' + str(detection.id)
+            print(tagframename)
+            pose_tag_base = helper.poseTransform(helper.pose2list(detection.pose),  homeFrame = '/camera', targetFrame = '/base_link', listener = self.listener)
+            pose_base_map = helper.poseTransform(helper.invPoseList(pose_tag_base), homeFrame = tagframename, targetFrame = '/map', listener = self.listener)
+            helper.pubFrame(self.br, pose = pose_base_map, frame_id = '/base_link', parent_frame_id = '/map', npub = 1)
 
     def constant_vel_loop(self):
         while not rospy.is_shutdown() :

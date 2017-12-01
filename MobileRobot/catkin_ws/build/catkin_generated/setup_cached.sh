@@ -7,5 +7,5 @@
 # new environment variables
 
 # modified environment variables
-export LD_LIBRARY_PATH="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel/lib:/opt/ros/kinetic/lib:/opt/ros/kinetic/lib/x86_64-linux-gnu:/usr/local/lib:/usr/local/lib:/usr/local/cuda/lib64:/usr/local/cuda/lib64"
+export LD_LIBRARY_PATH="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel/lib:/opt/ros/kinetic/lib:/opt/ros/kinetic/lib/x86_64-linux-gnu:/usr/local/lib:/usr/local/lib:/usr/local/lib:/usr/local/lib:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/usr/local/cuda/lib64:/usr/local/cuda/lib64"
 export PWD="/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/build"

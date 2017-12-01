@@ -1,4 +1,11 @@
 <launch>
-   <node name="tf1" pkg="tf" type="static_transform_publisher" args="0 0 0.44 0.5 0.5 0.5 0.5 map apriltag 10" />
-   <node name="tf2" pkg="tf" type="static_transform_publisher" args="-0.24 0 0.35 -0.5 0.5 -0.5 0.5 base_link camera 10" />
+   <node name="tf_apriltag6_map" pkg="tf" type="static_transform_publisher" args=".21 1.94 .55 0.70711 0 0 0.70711 map apriltag6 10" />
+   <node name="tf_apriltag2_map" pkg="tf" type="static_transform_publisher" args="0 1.1176 0.4064 0.5 0.5 0.5 0.5 map apriltag2 10" />
+   <node name="tf_apriltag1_map" pkg="tf" type="static_transform_publisher" args="1.8542 2.3622 0.4064 0.70711 0 0 0.70711 map apriltag1 10" />
+   <node name="tf_apriltag7_map" pkg="tf" type="static_transform_publisher" args="1.2446 0 0.4064 0 0.70711 0.70711 0 map apriltag7 10" />
+   <node name="tf_apriltag4_map" pkg="tf" type="static_transform_publisher" args="2.3622 1.8288 0.4064 -0.5 0.5 0.5 -0.5 map apriltag4 10" />
+   <node name="tf_apriltag3_map" pkg="tf" type="static_transform_publisher" args="0.4318 2.1588 0.5336 0.5 0.5 0.5 0.5 map apriltag3 10" />
+   <node name="tf_apriltag5_map" pkg="tf" type="static_transform_publisher" args="2.0318 1.2956 .2032 0 0.70711 0.70711 0 map apriltag5 10" />
+   <node name="tf_camera_base" pkg="tf" type="static_transform_publisher" args="-0.24 0 0.35 -0.5 0.5 -0.5 0.5 base_link camera 10" />
 </launch>
+ 

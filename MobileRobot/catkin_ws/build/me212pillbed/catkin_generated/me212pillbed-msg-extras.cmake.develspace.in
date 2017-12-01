@@ -1,0 +1,2 @@
+set(me212pillbed_MESSAGE_FILES "/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/src/me212pillbed/msg/WheelVelCmd.msg")
+set(me212pillbed_SERVICE_FILES "")

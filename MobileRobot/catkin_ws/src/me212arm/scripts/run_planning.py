@@ -7,35 +7,39 @@ import planner
 import std_msgs.msg, sensor_msgs.msg
 import numpy as np
 
-rospy.init_node("run_planning")
+def grip_change(mystring):
+    rospy.init_node("run_planning")
 
-exec_joint1_pub = rospy.Publisher('/joint1_controller/command', std_msgs.msg.Float64, queue_size=1)
-exec_joint2_pub = rospy.Publisher('/joint2_controller/command', std_msgs.msg.Float64, queue_size=1)
-exec_joint_pub = rospy.Publisher('/virtual_joint_states', sensor_msgs.msg.JointState, queue_size=10)
+    exec_joint1_pub = rospy.Publisher('/joint1_controller/command', std_msgs.msg.Float64, queue_size=1)
+    # exec_joint2_pub = rospy.Publisher('/joint2_controller/command', std_msgs.msg.Float64, queue_size=1)
+    exec_joint_pub = rospy.Publisher('/virtual_joint_states', sensor_msgs.msg.JointState, queue_size=10)
 
-use_real_arm = rospy.get_param('/real_arm', False)
+    use_real_arm = rospy.get_param('/real_arm', False)
 
-if __name__=="__main__":
+
     radius = 0.05          # (meter)
     center = [0.2, 0.15]  # (x,z) meter
-    
-    robotjoints = rospy.wait_for_message('/joint_states', sensor_msgs.msg.JointState)
-    q0 = robotjoints.position
+    print('RUNNING')
+    #robotjoints = rospy.wait_for_message('/joint_states', sensor_msgs.msg.JointState)
+    #q0 = robotjoints.position
     
     for theta in np.linspace(0, 4*np.pi):
-        target_xz =   ## [??, ??] use theta in your code
-        q_sol =       ## planner.ik( ?? )
+        # target_xz =   ## [??, ??] use theta in your code
+        q_sol =  (np.pi/6,0)     ## planner.ik( ?? )
         if q_sol is None:
             print 'no ik solution'
         else:
             print '(q_1,q_2)=', q_sol
             if use_real_arm:
-                exec_joint1_pub.publish(std_msgs.msg.Float64(q_sol[0]))
-                exec_joint2_pub.publish(std_msgs.msg.Float64(q_sol[1]))
+                if mystring == 'open':
+                    exec_joint1_pub.publish(std_msgs.msg.Float64(q_sol[0]))
+                    print("open")
+                # exec_joint2_pub.publish(std_msgs.msg.Float64(q_sol[1]))
+                if mystring == 'close':
+                    exec_joint1_pub.publish(std_msgs.msg.Float64(q_sol[1]))
             else:
                 js = sensor_msgs.msg.JointState(name=['joint1', 'joint2'], position = q_sol)
                 exec_joint_pub.publish(js)
             q0 = q_sol
 
-        rospy.sleep(0.3)
-
+        rospy.sleep(0.1)

@@ -1,2 +1,2 @@
-dynamixel_motor/dynamixel_controllers:dynamixel_motor/dynamixel_driver:dynamixel_motor/dynamixel_motor:dynamixel_motor/dynamixel_msgs:dynamixel_motor/dynamixel_tutorials:fullStateControl:me212arm:me212base:me212bot:me212cv:me212pillbed
+apriltags:dynamixel_motor/dynamixel_controllers:dynamixel_motor/dynamixel_driver:dynamixel_motor/dynamixel_motor:dynamixel_motor/dynamixel_msgs:dynamixel_motor/dynamixel_tutorials:fullStateControl:me212arm:me212base:me212bot:me212cv:me212pillbed
 -DCATKIN_DEVEL_PREFIX=/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/robot/Desktop/me212s3/MobileRobot/catkin_ws/install -G Unix Makefiles
