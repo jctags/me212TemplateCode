@@ -74,7 +74,7 @@ cmd "4.3-planning-collision-test" {
 }
 
 cmd "5-robot" {
-    exec = "rosrun me212base me212base_node.py";
+    exec = "rosrun me212base me212bot.py";
     host = "localhost";
 }
 
@@ -98,7 +98,7 @@ cmd "7.3-apriltags" {
     host = "localhost";
 }
 
-cmd "joe-navigation" {
+cmd "MAIN navigation script courtesy of joe" {
     exec = "rosrun me212pillbed navigation.py";
     host = "localhost";
 }
@@ -144,5 +144,22 @@ script "run-real" {
     start cmd "1-robot-arm-real-joint-state-publisher";
     #start cmd "2-rviz";
     start cmd "3-tf";
-    start cmd "joe-navigation";
+    start cmd "3.3-kinect";
+    start cmd "MAIN navigation script courtesy of joe";
+}
+
+script "test-navi" {
+    start cmd "0-roscore";
+    wait ms 1000;
+    start cmd "apriltag-frames";
+    wait ms 1000;
+    start cmd "3.3-kinect";
+    wait ms 1000;
+    start cmd "2-rviz";
+    wait ms 1000;
+    start cmd "3.2-apriltags";
+    wait ms 1000;
+    start cmd "5-robot";
+    wait ms 1000;
+    start cmd "MAIN navigation script courtesy of joe";
 }

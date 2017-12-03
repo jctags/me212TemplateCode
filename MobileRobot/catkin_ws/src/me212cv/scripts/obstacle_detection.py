@@ -16,59 +16,90 @@ from cv_bridge import CvBridge, CvBridgeError
 import message_filters
 import math
 
-rospy.init_node('object_detection', anonymous=True) ##### ERROR HERE
-print("making node")
+import sys
 
-# Publisher for publishing pyramid marker in rviz
-vis_pub = rospy.Publisher('visualization_marker', Marker, queue_size=10) 
 
-# Bridge to convert ROS Image type to OpenCV Image type
-cv_bridge = CvBridge()  
 
-# Get the camera calibration parameter for the rectified image
-msg = rospy.wait_for_message('/camera/rgb/camera_info', CameraInfo, timeout=None) 
-#     [fx'  0  cx' Tx]
-# P = [ 0  fy' cy' Ty]
-#     [ 0   0   1   0]
 
-fx = msg.P[0]
-fy = msg.P[5]
-cx = msg.P[2]
-cy = msg.P[6]
-IsPurple = "empty"
-numPurple = 0
-numGreen = 0
 
-def main():
-    useHSV   = True
-    useDepth = False
-    if not useHSV:
-        # Task 1
+#def main():
+    # useHSV   = True
+    # useDepth = False
+    # if not useHSV:
+    #     # Task 1
         
-        # 1. initialize an OpenCV window
-        cv2.namedWindow("OpenCV_View")
+    #     # 1. initialize an OpenCV window
+    #     cv2.namedWindow("OpenCV_View")
         
-        # 2. set callback func for mouse hover event
-        cv2.setMouseCallback("OpenCV_View", cvWindowMouseCallBackFunc)
+    #     # 2. set callback func for mouse hover event
+    #     cv2.setMouseCallback("OpenCV_View", cvWindowMouseCallBackFunc)
         
-        # 3. subscribe to image
-        rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosImageVizCallback)
-    else:
-        if not useDepth:
-            # Task 2 Detect object using HSV
-            #    Subscribe to RGB images
-            rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosHSVProcessCallBack)
-        else:
-            # Task 3: Use Kinect depth data
-            #    Subscribe to both RGB and Depth images with a Synchronizer
-            image_sub = message_filters.Subscriber("/camera/rgb/image_rect_color", Image)
-            depth_sub = message_filters.Subscriber("/camera/depth_registered/image", Image)
+    #     # 3. subscribe to image
+    #     rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosImageVizCallback)
+    # else:
+    #     if not useDepth:
+    #         # Task 2 Detect object using HSV
+    #         #    Subscribe to RGB images
+    #         rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosHSVProcessCallBack)
+    #     else:
+    #         # Task 3: Use Kinect depth data
+    #         #    Subscribe to both RGB and Depth images with a Synchronizer
+    #         image_sub = message_filters.Subscriber("/camera/rgb/image_rect_color", Image)
+    #         depth_sub = message_filters.Subscriber("/camera/depth_registered/image", Image)
 
-            ts = message_filters.ApproximateTimeSynchronizer([image_sub, depth_sub], 10, 0.5)
-            ts.registerCallback(rosRGBDCallBack)
+    #         ts = message_filters.ApproximateTimeSynchronizer([image_sub, depth_sub], 10, 0.5)
+    #         ts.registerCallback(rosRGBDCallBack)
+    #rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosHSVProcessCallBack)
+    #rospy.spin()
 
+def whichpath():
+    global fx 
+    global fy
+    global cx
+    global cy
+
+    global numPurple
+    global numGreen
+
+    numPurple = 0
+    numGreen = 0
+    rospy.init_node('object_detection', anonymous=True) ##### ERROR HERE
+    #print("making node")
+
+    # Publisher for publishing pyramid marker in rviz
+    global vis_pub
+    vis_pub = rospy.Publisher('visualization_marker', Marker, queue_size=10) 
+
+    # Bridge to convert ROS Image type to OpenCV Image type
+    global cv_bridge 
+    cv_bridge = CvBridge()  
+
+    # Get the camera calibration parameter for the rectified image
+    global msg
+    msg = rospy.wait_for_message('/camera/rgb/camera_info', CameraInfo, timeout=None) 
+    #     [fx'  0  cx' Tx]
+    # P = [ 0  fy' cy' Ty]
+    #     [ 0   0   1   0]
+    fx = msg.P[0]
+    fy = msg.P[5]
+    cx = msg.P[2]
+    cy = msg.P[6]
+    IsPurple = "empty"
+
+    #numGreen = 0
+
+    rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosHSVProcessCallBack)
     rospy.spin()
+    #print numPurple
+    if numPurple>50:
+        #TODO; end it
+        color = "purple"
+        return color
 
+    else:
+        color = "green"
+        return color
+    
 # Task 1 callback for ROS image
 def rosImageVizCallback(msg):
     # 1. convert ROS image to opencv format
@@ -89,18 +120,18 @@ def cvWindowMouseCallBackFunc(event, xp, yp, flags, param):
     # 2. Visualize the pyramid
     showPyramid(xp, yp, zc, 10, 10)
 
-def isPurpleReady():
-    if numPurple>10:
-        #TODO; end it
-        return True
-    else:
-        return False
-def isGreenReady():
-    if numGreen>10:
-        #TODO; end it
-        return True
-    else:
-        return False
+# def isPurpleReady():
+#     if numPurple>10:
+#         #TODO; end it
+#         return True
+#     else:
+#         return False
+# def isGreenReady():
+#     if numGreen>10:
+#         #TODO; end it
+#         return True
+#     else:
+#         return False
 
 # Task 2 callback
 def rosHSVProcessCallBack(msg):
@@ -126,15 +157,24 @@ def rosHSVProcessCallBack(msg):
         
         centerx, centery = xp+w/2, yp+h/2
         area = h*w
-        if (area > 10000):
-            print "I see purple"
-            IsPurple = "purple"
+        print area
+
+
+        if (area > 1000):
+            #print "I see purple"
+            #IsPurple = "purple"
+            global numPurple
             numPurple+=1
-            numGreen = 0
+            #numGreen = 0
             #print [centerx, centery]
         else:
-            numPurple = 0
+            #numPurple = 0
+            global numGreen
             numGreen+=1
+        if numPurple > 50:
+            rospy.signal_shutdown("bc")
+        if numGreen > 50:
+            rospy.signal_shutdown("bc")
         showPyramid(centerx, centery, zc, w, h)
     
 
@@ -149,8 +189,8 @@ def HSVObjectDetection(cv_image, toPrint = True):
     upper_blue = np.array([130,255,255])
     lower_green = np.array([30, 50, 50])
     upper_green = np.array([90, 255, 255])
-    lower_purple = np.array([130, 50, 50])
-    upper_purple = np.array([160, 255, 255])
+    lower_purple = np.array([120, 50, 50])
+    upper_purple = np.array([150, 255, 255])
 
 
     # Threshold the HSV image to get only red colors
@@ -260,6 +300,3 @@ def createTriangleListMarker(marker_id, points, rgba, frame_id = '/camera'):
 def poselist2pose(poselist):
     return Pose(Point(*poselist[0:3]), Quaternion(*poselist[3:7]))
 
-if __name__=='__main__':
-    main()
-    
